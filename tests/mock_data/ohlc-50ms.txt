@@ -1,0 +1,10 @@
+{"symbol":"S1","timestamp":1662022800005,"open":"10.15","high":"10.15","low":"10.15","close":"10.15"}
+{"symbol":"S1","timestamp":1662022800043,"open":"10.15","high":"10.25","low":"10.15","close":"10.25"}
+{"symbol":"S1","timestamp":1662022800066,"open":"10.25","high":"10.35","low":"10.25","close":"10.35"}
+{"symbol":"S2","timestamp":1662022800071,"open":"0.21","high":"0.21","low":"0.21","close":"0.21"}
+{"symbol":"S2","timestamp":1662022800084,"open":"0.21","high":"0.23","low":"0.21","close":"0.23"}
+{"symbol":"S1","timestamp":1662022800086,"open":"10.25","high":"10.35","low":"10.25","close":"10.35"}
+{"symbol":"S2","timestamp":1662022800192,"open":"0.195","high":"0.195","low":"0.195","close":"0.195"}
+{"symbol":"S1","timestamp":1662022800202,"open":"10.35","high":"10.35","low":"10.35","close":"10.35"}
+{"symbol":"S2","timestamp":1662022800203,"open":"0.195","high":"0.235","low":"0.195","close":"0.235"}
+{"symbol":"S1","timestamp":1662022800230,"open":"10.35","high":"10.45","low":"10.35","close":"10.45"}
