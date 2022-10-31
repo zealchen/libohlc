@@ -10,8 +10,8 @@ fn test_ohlc_make_data_a() {
     let ohlc_path = "../data/predictions.txt";
     let reference_ohlc_path = "../data/ohlc-5m-a.txt";
     let window = 60 * 5 * 1000;
-    maker.make(tick_path.to_string(), window, ohlc_path.to_string());
-    
+    maker.make(tick_path, window, ohlc_path);
+
     let mut predictions: Vec<OHLCData> = Vec::with_capacity(100);
     if let Ok(lines) = read_lines(&ohlc_path) {
         for line in lines {
@@ -50,8 +50,8 @@ fn test_ohlc_make_mock_data() {
     let ohlc_path = "tests/mock_data/predictions.txt";
     let reference_ohlc_path = "tests/mock_data/ohlc-50ms.txt";
     let window = 50;  // 50 ms
-    maker.make(tick_path.to_string(), window, ohlc_path.to_string());
-    
+    maker.make(tick_path, window, ohlc_path);
+
     let mut predictions: Vec<OHLCData> = Vec::with_capacity(1024);
     if let Ok(lines) = read_lines(&ohlc_path) {
         for line in lines {
@@ -92,7 +92,7 @@ fn test_ohlc_make_data_a_parallel() {
     let ohlc_path = "../data/predictions.txt";
     let reference_ohlc_path = "../data/ohlc-5m-a.txt";
     let window = 60 * 5 * 1000;
-    maker.parallel_make(tick_path.to_string(), window, ohlc_path.to_string());
+    maker.parallel_make(tick_path, window, ohlc_path);
     
     let mut predictions: Vec<OHLCData> = Vec::with_capacity(100);
     if let Ok(lines) = read_lines(&ohlc_path) {
@@ -133,8 +133,8 @@ fn test_ohlc_make_mock_data_parallel() {
     let ohlc_path = "tests/mock_data/predictions.txt";
     let reference_ohlc_path = "tests/mock_data/ohlc-50ms.txt";
     let window = 50 ;  // 50ms
-    maker.parallel_make(tick_path.to_string(), window, ohlc_path.to_string());
-    
+    maker.parallel_make(tick_path, window, ohlc_path);
+
     let mut predictions: Vec<OHLCData> = Vec::with_capacity(1024);
     if let Ok(lines) = read_lines(&ohlc_path) {
         for line in lines {

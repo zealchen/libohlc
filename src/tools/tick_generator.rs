@@ -16,15 +16,14 @@ impl TickGenerator {
         TickGenerator{}
     }
 
-    pub fn from_file(&self, tick_path: &String) -> Vec<TickData>{
+    pub fn from_file(&self, tick_path: &str) -> Vec<TickData>{
         let mut tick_datas: Vec<TickData> = Vec::with_capacity(1024);
         if let Ok(lines) = read_lines(&tick_path) {
             for line in lines {
                 if let Ok(line) = line {
                     let mut tick: TickData = serde_json::from_str(line.as_str()).expect("JSON was not well-formatted");
                     // println!("{:?}", tick);
-                    tick.b_f = Some(tick.b.parse::<f64>().unwrap());
-                    tick.a_f = Some(tick.a.parse::<f64>().unwrap());
+                    tick.populate_price();
                     tick_datas.push(tick);
                 }
             }
@@ -44,14 +43,12 @@ impl TickGenerator {
                 "".to_string(),
                 0,
                 "s".to_string(),
+                bit.to_string(),
                 "".to_string(),
                 "".to_string(),
-                "".to_string(),
-                "".to_string(),
+                ask.to_string(),
                 1662022800000 + (i as u64),
-                0,
-                Some(bit+0.001),
-                Some(ask+0.001)
+                0
             ))
         }
         tick_datas

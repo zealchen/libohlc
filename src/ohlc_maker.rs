@@ -15,9 +15,6 @@ struct TickDataRangeIndex {
 
 pub struct OHLCMaker {}
 
-fn compute_tick_price(b: f64, a: f64) -> f64{
-    (b + a)/2.0
-}
 
 impl OHLCMaker {
     pub fn new() -> Self{
@@ -26,9 +23,9 @@ impl OHLCMaker {
 
     // single thread solution
     pub fn make(&self, 
-        tick_path: String, // input dataset path
+        tick_path: &str, // input dataset path
         window_length: u64, // input window length in ms
-        ohlc_path: String // output ohlc path
+        ohlc_path: &str // output ohlc path
     ) {
         let tick_generator = TickGenerator::new();
         let tick_datas = tick_generator.from_file(&tick_path);
@@ -42,9 +39,9 @@ impl OHLCMaker {
 
     // multi thread solution
     pub fn parallel_make(&self, 
-        tick_path: String, // input dataset path
+        tick_path: &str, // input dataset path
         window_length: u64, // input window length in ms
-        ohlc_path: String // output ohlc path
+        ohlc_path: &str // output ohlc path
     ) {
         let tick_generator = TickGenerator::new();
         let tick_datas =  Arc::new(RwLock::new(tick_generator.from_file(&tick_path)));
@@ -159,7 +156,7 @@ fn update_window(tick_datas: &Vec<TickData>, window: &mut OHLCWindow, cur_price:
         for i in window.begin_index + 1..cur_index + 1 {
             if tick_datas[i].s.eq(symbol) && cur_tick.T - tick_datas[i].T < window_length {
                 window.begin_index = i;
-                window.open = compute_tick_price(tick_datas[i].b_f.unwrap(), tick_datas[i].a_f.unwrap());
+                window.open = tick_datas[i].price.unwrap();
                 window.high = window.open;
                 window.low = window.open;
                 break;
@@ -167,7 +164,7 @@ fn update_window(tick_datas: &Vec<TickData>, window: &mut OHLCWindow, cur_price:
         }
         // then, update high/low in range i-th to current tick
         for i in window.begin_index + 1..cur_index + 1 {
-            let price = compute_tick_price(tick_datas[i].b_f.unwrap(), tick_datas[i].a_f.unwrap());
+            let price = tick_datas[i].price.unwrap();
             if price > window.high {
                 window.high = price;
             }
@@ -198,7 +195,7 @@ pub fn make_batch_ohlc(
     let mut ohlc_datas: Vec<OHLCData> = Vec::with_capacity(tick_datas.len());
     for index in window_begin..range_end + 1 {
         let tick = &tick_datas[index];
-        let cur_price = compute_tick_price(tick.a_f.unwrap(), tick.b_f.unwrap());
+        let cur_price = tick.price.unwrap();
         if !symbel_windows.contains_key(&tick.s) {
             symbel_windows.insert(tick.s.clone(), OHLCWindow{
                 open: cur_price,
