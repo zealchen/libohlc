@@ -45,8 +45,8 @@ impl TickGenerator {
                 "s".to_string(),
                 bit.to_string(),
                 "".to_string(),
-                "".to_string(),
                 ask.to_string(),
+                "".to_string(),
                 1662022800000 + (i as u64),
                 0
             ))

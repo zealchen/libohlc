@@ -13,18 +13,18 @@ In this crate, we have two solutions implemented in mod ohlc_maker.
 One is single thread solution ohlc_maker::OHLCMaker::make().
 ```sh
 pub fn make(&self, 
-    tick_path: String, // input dataset path
+    tick_path: &str, // input dataset path
     window_length: u64, // input window length in ms
-    ohlc_path: String // output ohlc path
+    ohlc_path: &str // output ohlc path
 )
 ```
 
 And the other is multi-thread solution ohlc_maker::OHLCMaker::parallel_make().
 ```sh
 pub fn parallel_make(&self, 
-    tick_path: String, // input dataset path
+    tick_path: &str, // input dataset path
     window_length: u64, // input window length in ms
-    ohlc_path: String // output ohlc path
+    ohlc_path: &str // output ohlc path
 )
 ```
 The thread count is set to the local machine cpu count.
@@ -37,10 +37,10 @@ use libohlc::ohlc_maker::OHLCMaker;
 
 fn main() {
     let maker = OHLCMaker::new();
-    let tick_path = "../data/dataset-b.txt";
+    let tick_path = "dataset.txt";
     let ohlc_path = "predictions.txt";
     let window = 60 * 5 * 1000; // 5m
-    maker.parallel_make(tick_path.to_string(), window, ohlc_path.to_string());
+    maker.parallel_make(tick_path, window, ohlc_path);
     println!("ohlc is dump to {}", ohlc_path)
 }
 ```

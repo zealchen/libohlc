@@ -6,9 +6,9 @@ use libohlc::tools::tick_generator::{read_lines};
 fn test_ohlc_make_data_a() {
     // use dataset a to test
     let maker = OHLCMaker::new();
-    let tick_path = "../data/dataset-a.txt";
-    let ohlc_path = "../data/predictions.txt";
-    let reference_ohlc_path = "../data/ohlc-5m-a.txt";
+    let tick_path = "data/dataset-a.txt";
+    let ohlc_path = "data/predictions.txt";
+    let reference_ohlc_path = "data/ohlc-5m-a.txt";
     let window = 60 * 5 * 1000;
     maker.make(tick_path, window, ohlc_path);
 
@@ -88,9 +88,9 @@ fn test_ohlc_make_mock_data() {
 fn test_ohlc_make_data_a_parallel() {
     // use dataset a to test batch solution
     let maker = OHLCMaker::new();
-    let tick_path = "../data/dataset-a.txt";
-    let ohlc_path = "../data/predictions.txt";
-    let reference_ohlc_path = "../data/ohlc-5m-a.txt";
+    let tick_path = "data/dataset-a.txt";
+    let ohlc_path = "data/predictions.txt";
+    let reference_ohlc_path = "data/ohlc-5m-a.txt";
     let window = 60 * 5 * 1000;
     maker.parallel_make(tick_path, window, ohlc_path);
     
