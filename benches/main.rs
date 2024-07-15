@@ -1,22 +1,23 @@
 use criterion::{criterion_group, criterion_main, Criterion};
+use libohlc::ohlc_maker::{make_batch_ohlc, OHLCMaker};
+use libohlc::tools::datas::TickData;
+use libohlc::tools::tick_generator::TickGenerator;
 use std::sync::{Arc, RwLock};
-use libohlc::ohlc_maker::{OHLCMaker, make_batch_ohlc};
-use libohlc::tools::datas::{TickData};
-use libohlc::tools::tick_generator::{TickGenerator};
-
 
 // this one sucks.
+#[allow(dead_code)]
 fn criterion_benchmark(c: &mut Criterion) {
-    c.bench_function("benchmark", |b| b.iter(|| {
-        let tick_generator = TickGenerator::new();
-        let size = 1000000;
-        let tick_datas = Arc::new(tick_generator.from_mock(size));
-        let local_data: &Vec<TickData> = &*tick_datas;
-        let ohlc_datas = make_batch_ohlc(local_data, 10, 0, size - 1, 0);
-        assert_eq!(ohlc_datas.len(), size);
-    }));
+    c.bench_function("benchmark", |b| {
+        b.iter(|| {
+            let tick_generator = TickGenerator::new();
+            let size = 1000000;
+            let tick_datas = Arc::new(tick_generator.from_mock(size));
+            let local_data: &Vec<TickData> = &tick_datas;
+            let ohlc_datas = make_batch_ohlc(local_data, 10, 0, size - 1, 0);
+            assert_eq!(ohlc_datas.len(), size);
+        })
+    });
 }
-
 
 // parallel solution is much more better :)
 fn criterion_benchmark_parallel(c: &mut Criterion) {

@@ -15,7 +15,7 @@ pub struct TickData {
     pub T: u64,
     E: u64,
 
-    pub price:  Option<f64>
+    pub price: Option<f64>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -27,7 +27,7 @@ pub struct OHLCData {
     pub open: String,
     pub high: String,
     pub low: String,
-    pub close: String
+    pub close: String,
 }
 
 #[derive(Deserialize)]
@@ -38,17 +38,39 @@ pub struct OHLCWindow {
     pub high: f64,
     pub low: f64,
 
-    pub begin_index: usize  // the window's begin index of the vector
+    pub begin_index: usize, // the window's begin index of the vector
 }
 
-pub fn compute_tick_price(b: f64, a: f64) -> f64{
-    (b + a)/2.0
+pub fn compute_tick_price(b: f64, a: f64) -> f64 {
+    (b + a) / 2.0
 }
 
 #[allow(non_snake_case)]
+#[allow(clippy::too_many_arguments)]
 impl TickData {
-    pub fn new(e: String, u: u64, s: String, b: String, B: String, a: String, A: String, T: u64, E: u64) -> Self {
-        let mut tick = TickData{e, u, s, b, B, a, A, T, E, price: None};
+    pub fn new(
+        e: String,
+        u: u64,
+        s: String,
+        b: String,
+        B: String,
+        a: String,
+        A: String,
+        T: u64,
+        E: u64,
+    ) -> Self {
+        let mut tick = TickData {
+            e,
+            u,
+            s,
+            b,
+            B,
+            a,
+            A,
+            T,
+            E,
+            price: None,
+        };
         tick.populate_price();
         tick
     }
@@ -56,7 +78,7 @@ impl TickData {
     pub fn populate_price(&mut self) {
         self.price = Some(compute_tick_price(
             self.b.parse::<f64>().unwrap(),
-            self.a.parse::<f64>().unwrap()
+            self.a.parse::<f64>().unwrap(),
         ));
     }
 }
